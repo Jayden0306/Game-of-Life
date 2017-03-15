@@ -12,8 +12,6 @@ var grid = [];
 var result = [];
 
 
-
-
 initGrid();
 addRandomCell();
 
@@ -38,6 +36,28 @@ function reset() {
 	addRandomCell();
 	draw();
 }
+
+var socket = io.connect("http://76.28.150.193:8888");
+//save data to the server
+function save() {
+	socket.emit("save", { studentname: "Jayden Tan", statename: "gameoflife", data: grid});
+}
+
+//fetch the data from server
+function load() {
+	socket.emit("load", {studentname: "Jayden Tan", statename: "gameoflife"});
+}
+
+//onclick listener for socket io's  load
+socket.on("load", function(data) {
+	// console.log(data.data);
+	for (var i = 0; i < cellsInRow; i++) { 
+        for (var j = 0; j < cellsInColumn; j++) {
+            grid[i][j] = data.data[i][j];
+        }
+    }
+    draw();
+})
 
 
 function initGrid() {
