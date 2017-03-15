@@ -31,6 +31,7 @@ function stop() {
 	clearInterval(timeID);
 }
 
+//restart the game
 function reset() {
 	initGrid();
 	addRandomCell();
